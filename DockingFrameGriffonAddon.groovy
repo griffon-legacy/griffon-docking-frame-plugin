@@ -39,15 +39,13 @@ import com.canoo.griffon.factory.dockable.action.CSystemActionFactory
  */
 class DockingFrameGriffonAddon {
     WindowProvider provider
-    GriffonApplication app
 
-    def addonInit(app) {
+    void addonInit(GriffonApplication app) {
         this.provider = new GriffonWindowProvider(app)
-        this.app = app
         app.metaClass.dockController = new DockController()
     }
 
-    def factories = [
+    Map factories = [
             dockingFrame: new DockingFrameFactory(),
             dockingControl: new CControlFactory(this),
             dockingArea: new CContentAreaFactory(true),
@@ -87,7 +85,7 @@ class DockingFrameGriffonAddon {
             systemAction: new CSystemActionFactory(),
     ]
 
-    def attributeDelegates = [
+    List attributeDelegates = [
             { FactoryBuilderSupport builder, node, attributes ->
                 builder.context.dock = attributes.remove('dock')
                 builder.context.dockMinimized = attributes.remove('dockMinimized')
